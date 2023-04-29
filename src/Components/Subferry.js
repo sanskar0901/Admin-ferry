@@ -9,6 +9,10 @@ function Subferry() {
   const location = useLocation();
   const [subferryDetails, setSubFerryDetails] = useState([]);
   const searchParams = new URLSearchParams(location.search);
+  const [timeSlotFilter, setTimeSlotFilter] = useState('');
+  const [filtertimearr, setFiltertimearr] = useState([]);
+
+
 
 
   // Do something with the query params (e.g. display a success message)
@@ -22,8 +26,10 @@ function Subferry() {
       .get(`${API_URI}/ferry/subferry/${searchParams.get('ferryId')}`)
       .then((response) => {
         setSubFerryDetails(response.data);
-        console.log(response.data);
-        console.log(subferryDetails);
+        setFiltertimearr(Array.from(new Set(response.data.map(item => item.time_slot))));
+
+        // console.log(response.data);
+        // console.log(subferryDetails);
       })
       .catch((error) => {
         console.log(error);
@@ -69,7 +75,25 @@ function Subferry() {
                     Fare
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Time Slot
+                    <label htmlFor="timeSlotFilter" className="font-medium text-gray-700">
+                      Time Slot:
+                    </label>
+                    <select
+                      id="timeSlotFilter"
+                      name="timeSlotFilter"
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                      value={timeSlotFilter}
+                      onChange={(e) => setTimeSlotFilter(e.target.value)}
+                    >
+                      <option value="">All</option>
+                      {
+                        filtertimearr.map((time) => (
+                          <option value={time}>{time}</option>
+                        ))
+                      }
+
+
+                    </select>
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Function
@@ -77,24 +101,30 @@ function Subferry() {
 
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {subferryDetails.map((ferry) => (
-                  <tr key={ferry._id}>
-                    <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.ferryNumber}</td>
-                    <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.from}</td>
-                    <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.to}</td>
-                    <td className="px-3 py-4 whitespace-nowrap text-black ">{new Date(ferry.startDate).toLocaleDateString()}</td>
-                    <td className="px-3 py-4 whitespace-nowrap text-black ">{new Date(ferry.endDate).toLocaleDateString()}</td>
-                    <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.weekDay}</td>
-                    <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.capacity}</td>
-                    <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.fare}</td>
-                    <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.time_slot}</td>
-                    <td><button className='px-3 py-4 whitespace-nowrap text-black bg-green-500 hover:bg-green-600 h-[5vh] flex 
+              {!subferryDetails.length === 0 ? <p className='text-center text-2xl text-rose-500'>No Data Found</p> :
+                <>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {subferryDetails.filter(
+                      (fer) => fer.time_slot === timeSlotFilter || timeSlotFilter === ''
+                    ).map((ferry) => (
+                      <tr key={ferry._id}>
+                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.ferryNumber}</td>
+                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.from}</td>
+                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.to}</td>
+                        <td className="px-3 py-4 whitespace-nowrap text-black ">{new Date(ferry.startDate).toLocaleDateString()}</td>
+                        <td className="px-3 py-4 whitespace-nowrap text-black ">{new Date(ferry.endDate).toLocaleDateString()}</td>
+                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.weekDay}</td>
+                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.capacity}</td>
+                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.fare}</td>
+                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.time_slot}</td>
+                        <td><button className='px-3 py-4 whitespace-nowrap text-black bg-green-500 hover:bg-green-600 h-[5vh] flex 
                                         items-center justify-center border-l-green-500' onClick={() => navigate(`/bookings/?ferryId=${ferry._id}`)}> bookings</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </>
+              }
             </table>
           </div>
         </div>

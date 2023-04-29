@@ -4,13 +4,8 @@ import { API_URI } from '../constants/apiUrl.constant';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-function Booking() {
-    const navigate = useNavigate();
-    const location = useLocation();
+function Allbooking() {
     const [bookingDetails, setBookingDetails] = useState([]);
-    const searchParams = new URLSearchParams(location.search);
-
-
     // Do something with the query params (e.g. display a success message)
     // ...
 
@@ -19,7 +14,7 @@ function Booking() {
     useEffect(() => {
 
         axios
-            .get(`${API_URI}/booking/${searchParams.get('ferryId')}`)
+            .get(`${API_URI}/booking/`)
             .then((response) => {
                 setBookingDetails(response.data);
                 console.log(response.data);
@@ -60,7 +55,6 @@ function Booking() {
 
                                 </tr>
                             </thead>
-
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {bookingDetails.map((booking) => (
                                     <tr key={booking._id}>
@@ -82,4 +76,4 @@ function Booking() {
         </div >
     )
 }
-export default Booking;
+export default Allbooking;

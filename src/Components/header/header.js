@@ -9,8 +9,9 @@ export const Header = () => {
         <div className={classes.majorContainer}>
             <img src={logo} className={classes.logo} />
             <ul className={classes.list} >
-                <li className={classes.opt} onClick={() => { navigate('/') }}>Add Ferry</li>
-                <li className={classes.opt} onClick={() => { navigate('/ferry') }}>Ferries</li>
+                <li className={classes.opt} onClick={() => { navigate('/addferry') }}>Add Ferry</li>
+                <li className={classes.opt} onClick={() => { navigate('/') }}>Ferries</li>
+                <li className={classes.opt} onClick={() => { navigate('/allbookings') }}>All bookings</li>
 
             </ul>
         </div>

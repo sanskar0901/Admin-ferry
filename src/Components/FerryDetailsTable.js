@@ -19,12 +19,7 @@ function FerryDetailsTable() {
                 console.log(error);
             });
     }, []);
-    const handleDelete = (id) => {
-        axios.post(`${API_URI}/ferry/delete/${id}`).then((response) => {
-            console.log(response.data)
-        }
-        )
-    }
+
 
     return (
         <div className="flex flex-col">
