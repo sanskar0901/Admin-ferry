@@ -46,6 +46,7 @@ function Qrcode() {
       {
         readData ?
           <QrReader
+            constraints={{ facingMode: "environment" }}
             onResult={(result, error) => {
               if (!!result) {
                 console.log(result)
