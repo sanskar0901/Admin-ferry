@@ -22,8 +22,6 @@ function Booking() {
             .get(`${API_URI}/booking/${searchParams.get('ferryId')}`)
             .then((response) => {
                 setBookingDetails(response.data);
-                console.log(response.data);
-                console.log(bookingDetails);
             })
             .catch((error) => {
                 console.log(error);

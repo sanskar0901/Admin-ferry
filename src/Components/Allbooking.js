@@ -17,7 +17,7 @@ function Allbooking() {
             .get(`${API_URI}/booking/`)
             .then((response) => {
                 setBookingDetails(response.data);
-                console.log(response.data);
+                // console.log(response.data);
                 console.log(bookingDetails);
             })
             .catch((error) => {
