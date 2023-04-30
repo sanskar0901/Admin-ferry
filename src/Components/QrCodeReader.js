@@ -7,7 +7,7 @@ import axios from 'axios';
 import { API_URI } from '../constants/apiUrl.constant';
 
 
-function Qrcode() {
+function QrCodeReader() {
 
   const [data, setData] = useState({});
   const [readData, setReadData] = useState(false);
@@ -97,4 +97,4 @@ function Qrcode() {
   );
 }
 
-export default Qrcode;
+export default QrCodeReader;

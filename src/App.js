@@ -7,8 +7,9 @@ import FerryDetailsTable from './Components/FerryDetailsTable';
 import Subferry from './Components/Subferry';
 import Booking from './Components/booking';
 import Allbooking from './Components/Allbooking';
-import Qrcode from './Components/Qrcode';
+
 import { isMobile } from 'react-device-detect';
+import QrCodeReader from './Components/QrCodeReader';
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
     <div className="App">
       {isMobile ? <>
         <Routes>
-          <Route path="/" element={<Qrcode />} /></Routes></> :
+          <Route path="/" element={<QrCodeReader />} /></Routes></> :
         <>
           <Header />
           <br></br>
