@@ -28,6 +28,7 @@ function Subferry() {
         setSubFerryDetails(response.data);
         setFiltertimearr(Array.from(new Set(response.data.map(item => item.time_slot))));
 
+
         // console.log(response.data);
         // console.log(subferryDetails);
       })
@@ -35,8 +36,11 @@ function Subferry() {
         console.log(error);
       });
   }, []);
+
   const handleDelete = (id) => {
     axios.post(`${API_URI}/ferry/delete/${id}`).then((response) => {
+      window.alert("Deleted Successfully");
+      window.location.reload();
       console.log(response.data)
     }
     )
@@ -119,6 +123,9 @@ function Subferry() {
                         <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.time_slot}</td>
                         <td><button className='px-3 py-4 whitespace-nowrap text-black bg-green-500 hover:bg-green-600 h-[5vh] flex 
                                         items-center justify-center border-l-green-500' onClick={() => navigate(`/bookings/?ferryId=${ferry._id}`)}> bookings</button>
+                        </td>
+                        <td><button className='px-3 py-4 whitespace-nowrap text-black bg-rose-700 hover:bg-rose-900 h-[5vh] flex 
+                                        items-center justify-center border-l-rose-600'  onClick={(e) => { e.preventDefault(); handleDelete(ferry._id) }}> Delete</button>
                         </td>
                       </tr>
                     ))}
