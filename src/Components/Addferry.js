@@ -18,14 +18,14 @@ const AddFerry = () => {
     fare: '',
     time_slot: [],
   });
-  const timeSlots = [];
-  for (let i = 0; i < 24; i++) {
-    for (let j = 0; j < 60; j += 20) {
-      let hour = i.toString().padStart(2, "0");
-      let minute = j.toString().padStart(2, "0");
-      timeSlots.push(`${hour}:${minute}`);
-    }
-  }
+  const [timeSlots, setTimeSlots] = useState([])
+  // for (let i = 0; i < 24; i++) {
+  //   for (let j = 0; j < 60; j += 20) {
+  //     let hour = i.toString().padStart(2, "0");
+  //     let minute = j.toString().padStart(2, "0");
+  //     timeSlots.push(`${hour}:${minute}`);
+  //   }
+  // }
 
 
   const handleInputChange = (e) => {
@@ -56,27 +56,47 @@ const AddFerry = () => {
       }));
     }
   };
-  const handleTimeSlotChange = (event) => {
-    const time = event.target.value;
-    const checked = event.target.checked;
+  // const handleTimeSlotChange = (event) => {
+  //   const time = event.target.value;
+  //   const checked = event.target.checked;
 
-    if (checked) {
-      // add day to the array if it's not already present
-      if (!ferry.time_slot.includes(time)) {
-        setFerry((prevFerry) => ({
-          ...prevFerry,
-          time_slot: [...prevFerry.time_slot, time],
-        }));
-      }
-    } else {
-      // remove day from the array if it's present
-      console.log("hi")
+  //   if (checked) {
+  //     // add day to the array if it's not already present
+  //     if (!ferry.time_slot.includes(time)) {
+  //       setFerry((prevFerry) => ({
+  //         ...prevFerry,
+  //         time_slot: [...prevFerry.time_slot, time],
+  //       }));
+  //     }
+  //   } else {
+  //     // remove day from the array if it's present
+  //     console.log("hi")
+  //     setFerry((prevFerry) => ({
+  //       ...prevFerry,
+  //       time_slot: prevFerry.time_slot.filter((d) => d !== time),
+  //     }));
+  //   }
+  // };
+  const handleTimeSlotChange = (event) => {
+    const { value } = event.target;
+
+    // Check if the entered value is a valid time in the 24-hour format
+    const validTime = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(value);
+    if (!ferry.time_slot.includes(validTime) && validTime) {
       setFerry((prevFerry) => ({
         ...prevFerry,
-        time_slot: prevFerry.time_slot.filter((d) => d !== time),
+        time_slot: [...prevFerry.time_slot, value],
       }));
+      event.target.value = ''
     }
+  }
+  const handleTimeSlotRemove = (time) => {
+    setFerry((prevFerry) => ({
+      ...prevFerry,
+      time_slot: prevFerry.time_slot.filter((d) => d !== time)
+    }));
   };
+
 
   function handleSubmit(e) {
     // console.log("hie")
@@ -304,9 +324,21 @@ const AddFerry = () => {
             <div className="mb-4 flex gap-2">
               <label htmlFor="time_slot" className="block mb-2 w-[10vw] font-bold text-black">
                 Time Slot
+                <p className='text-red-500 text-xs italic font-bold'>*Enter a time in the 24-hour format (e.g. 00:00)</p>
               </label>
-              <div className="mt-1 grid grid-cols-5 gap-5 overflow-y-scroll overflow-x-hidden h-[50vh] w-[40vw]">
-                {timeSlots.map((slot) => (
+              <div className="mt-1 grid grid-cols-5 gap-5 overflow-y-scroll overflow-x-hidden  w-[40vw] text-black">
+                <input type="text" placeholder="00:00" onChange={handleTimeSlotChange}
+                  className="w-full px-3 py-2 leading-tight text-black border rounded shadow appearance-none focus:outline-none focus:shadow-outline bg-white"
+                />
+                <div>
+                  {ferry.time_slot.map((time) => (
+                    <div key={time}>
+                      {time}{' '}
+                      <button className="text-red-500" onClick={() => handleTimeSlotRemove(time)}>Remove</button>
+                    </div>
+                  ))}
+                </div>
+                {/* {timeSlots.map((slot) => (
                   <div key={slot}>
                     <input
                       // className="hidden"
@@ -326,7 +358,7 @@ const AddFerry = () => {
                     </label>
 
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
           </div>
