@@ -10,9 +10,13 @@ import Allbooking from './Components/Allbooking';
 
 import { isMobile } from 'react-device-detect';
 import QrCodeReader from './Components/QrCodeReader';
+import Login from './Components/login';
+import { useState } from 'react';
 
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
   return (
     <div className="App">
       {isMobile ? <>
@@ -22,11 +26,20 @@ function App() {
           <Header />
           <br></br>
           <Routes>
-            <Route path="/addferry" element={<AddFerry />} />
-            <Route path="/" element={<FerryDetailsTable />} />
-            <Route path='/subferry' element={<Subferry />} />
-            <Route path='/bookings' element={<Booking />} />
-            <Route path='/allbookings' element={<Allbooking />} />
+            {
+              !isLoggedIn &&
+                <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+            }
+            {
+              isLoggedIn &&
+              <>
+                <Route path="/addferry" element={<AddFerry />} />
+                <Route path="/" element={<FerryDetailsTable />} />
+                <Route path='/subferry' element={<Subferry />} />
+                <Route path='/bookings' element={<Booking />} />
+                <Route path='/allbookings' element={<Allbooking />} />
+              </>
+            }
             {/* <Route path='/qrcode' element={<Qrcode />} /> */}
 
           </Routes>
