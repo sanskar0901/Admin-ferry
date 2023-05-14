@@ -8,9 +8,26 @@ function Subferry() {
   const navigate = useNavigate();
   const location = useLocation();
   const [subferryDetails, setSubFerryDetails] = useState([]);
+  const [totalcapacity, setTotalcapacity] = useState(0)
   const searchParams = new URLSearchParams(location.search);
   const [timeSlotFilter, setTimeSlotFilter] = useState('');
   const [filtertimearr, setFiltertimearr] = useState([]);
+
+  const [hideColumns, setHideColumns] = useState(true);
+  const columns = [
+    // { name: 'Range Id', prop: 'ferryNumber' },
+    { name: 'From', prop: 'from', hidden: hideColumns },
+    { name: 'To', prop: 'to', hidden: hideColumns },
+    { name: 'Date', prop: 'startDate' },
+    { name: 'End Date', prop: 'endDate', hidden: hideColumns },
+    { name: 'Week Days', prop: 'weekDay', hidden: hideColumns },
+    { name: 'Sold/Capacity', prop: 'capacity' },
+    // { name: 'Fare', prop: 'fare' },
+  ];
+
+  const toggleColumns = () => {
+    setHideColumns(!hideColumns);
+  };
 
 
 
@@ -25,9 +42,10 @@ function Subferry() {
     axios
       .get(`${API_URI}/ferry/subferry/${searchParams.get('ferryId')}`)
       .then((response) => {
-        setSubFerryDetails(response.data);
-        setFiltertimearr(Array.from(new Set(response.data.map(item => item.time_slot))));
-
+        setSubFerryDetails(response.data.subferry);
+        setTotalcapacity(response.data.capacity)
+        setFiltertimearr(Array.from(new Set(response.data.subferry.map(item => item.time_slot))));
+        console.log(filtertimearr)
 
         // console.log(response.data);
         // console.log(subferryDetails);
@@ -48,36 +66,27 @@ function Subferry() {
 
   return (
     <div className="flex flex-col">
+      <div className="flex justify-start">
+        <button
+          className="px-3 py-4 whitespace-nowrap text-black bg-blue-500 hover:bg-blue-600 h-[5vh] flex items-center justify-center border-l-blue-500"
+          onClick={toggleColumns}
+        >
+          Toggle Columns
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <div className="py-2 align-middle inline-block min-w-full">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Ferry Number
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    From
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    To
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Start Date
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    End Date
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Week Days
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Capacity
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Fare
-                  </th>
+                  {columns.map(column => (
+                    <th key={column.prop} className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${column.hidden ? 'hidden' : ''}`}>
+                      <div className='flex justify-center py-2 gap-4 items-center w-[10vw]'>
+                        {column.name}
+                      </div>
+                    </th>
+                  ))}
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <label htmlFor="timeSlotFilter" className="font-medium text-gray-700">
                       Time Slot:
@@ -98,44 +107,65 @@ function Subferry() {
 
 
                     </select>
+
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Function
                   </th>
-
                 </tr>
               </thead>
-              {!subferryDetails.length === 0 ? <p className='text-center text-2xl text-rose-500'>No Data Found</p> :
-                <>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {subferryDetails.filter(
-                      (fer) => fer.time_slot === timeSlotFilter || timeSlotFilter === ''
-                    ).map((ferry) => (
-                      <tr key={ferry._id}>
-                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.ferryNumber}</td>
-                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.from}</td>
-                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.to}</td>
-                        <td className="px-3 py-4 whitespace-nowrap text-black ">{new Date(ferry.startDate).toLocaleDateString()}</td>
-                        <td className="px-3 py-4 whitespace-nowrap text-black ">{new Date(ferry.endDate).toLocaleDateString()}</td>
-                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.weekDay}</td>
-                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.capacity}</td>
-                        <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.fare}</td>
+              {!subferryDetails.length ? (
+                <p className="text-center text-2xl text-rose-500">No Data Found</p>
+              ) : (
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {subferryDetails
+                    .filter(fer => fer.time_slot === timeSlotFilter || timeSlotFilter === '')
+                    .map(ferry => (
+                      <tr key={ferry._id} >
+                        {columns.map(column => (
+                          <td key={column.prop} className={` text-black ${column.hidden ? 'hidden' : ''}`}>
+                            <div className='flex justify-center py-2 gap-4 items-center'>
+                              {column.prop === 'startDate' || column.prop === 'endDate' ?
+                                new Date(ferry[column.prop]).toLocaleDateString() :
+                                column.prop === 'capacity' ?
+                                  <p>
+                                    {`${totalcapacity - ferry[column.prop]}/${totalcapacity}`}
+                                  </p> :
+                                  ferry[column.prop]
+
+                              }
+                            </div>
+                          </td>
+                        ))}
+
                         <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.time_slot}</td>
-                        <td><button className='px-3 py-4 whitespace-nowrap text-black bg-green-500 hover:bg-green-600 h-[5vh] flex 
-                                        items-center justify-center border-l-green-500' onClick={() => navigate(`/bookings/?ferryId=${ferry._id}`)}> bookings</button>
-                        </td>
-                        <td><button className='px-3 py-4 whitespace-nowrap text-black bg-rose-700 hover:bg-rose-900 h-[5vh] flex 
-                                        items-center justify-center border-l-rose-600'  onClick={(e) => { e.preventDefault(); handleDelete(ferry._id) }}> Delete</button>
+                        <td className='flex justify-start py-2 gap-4 items-center'>
+                          <button
+                            className="px-3 py-4 whitespace-nowrap text-black bg-green-500 hover:bg-green-600 h-[5vh] flex items-center  border-l-green-500"
+                            onClick={() => navigate(`/ bookings /? ferryId = ${ferry._id}`)}
+                          >
+                            Bookings
+                          </button>
+
+                          {/* <button
+                            className="px-3 py-4 whitespace-nowrap text-black bg-rose-700 hover:bg-rose-900 h-[5vh] flex items-center justify-center border-l-rose-600"
+                            onClick={e => {
+                              e.preventDefault();
+                              handleDelete(ferry._id);
+                            }}
+                          >
+                            Delete
+                          </button> */}
                         </td>
                       </tr>
                     ))}
-                  </tbody>
-                </>
-              }
+                </tbody>
+              )}
             </table>
           </div>
         </div>
       </div>
+
     </div >
   )
 }

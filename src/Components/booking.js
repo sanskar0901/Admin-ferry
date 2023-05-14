@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 function Booking() {
+    const [showToFromDate, setShowToFromDate] = useState(true);
     const navigate = useNavigate();
     const location = useLocation();
     const [bookingDetails, setBookingDetails] = useState([]);

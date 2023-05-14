@@ -7,6 +7,11 @@ function FerryDetailsTable() {
     const navigate = useNavigate();
     const [ferryDetails, setFerryDetails] = useState([]);
 
+    const [hideColumns, setHideColumns] = useState(true);
+    const toggleColumns = () => {
+        setHideColumns(!hideColumns);
+    };
+
     useEffect(() => {
         axios
             .get(`${API_URI}/ferry/`)
@@ -23,6 +28,14 @@ function FerryDetailsTable() {
 
     return (
         <div className="flex flex-col">
+            <div className="flex justify-center">
+                <button
+                    className="px-3 py-4 whitespace-nowrap text-black bg-blue-500 hover:bg-blue-600 h-[5vh] flex items-center justify-center border-l-blue-500"
+                    onClick={toggleColumns}
+                >
+                    Toggle Columns
+                </button>
+            </div>
             <div className="overflow-x-auto">
                 <div className="py-2 align-middle inline-block min-w-full">
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -32,31 +45,54 @@ function FerryDetailsTable() {
                                     <thead className="bg-gray-50">
                                         <tr>
                                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Ferry Number
+                                                <div className='flex items-center justify-center'>
+                                                    Range ID
+                                                </div>
+                                            </th>
+                                            {hideColumns ? null : <>
+
+                                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    <div className='flex items-center justify-center'>
+                                                        From
+                                                    </div>
+                                                </th>
+                                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    <div className='flex items-center justify-center'>
+                                                        To
+                                                    </div>
+                                                </th>
+                                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    <div className='flex items-center justify-center'>
+                                                        Start Date
+                                                    </div>
+                                                </th>
+                                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    <div className='flex items-center justify-center'>
+                                                        End Date
+                                                    </div>
+                                                </th>
+                                            </>
+                                            }
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                <div className='flex items-center justify-center'>
+                                                    Week Days
+
+                                                </div>
                                             </th>
                                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                From
+                                                <div className='flex items-center justify-center'>
+                                                    Capacity
+                                                </div>
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ">
+                                                <div className='flex items-center justify-center'>
+                                                    Fare
+                                                </div>
                                             </th>
                                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                To
-                                            </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Start Date
-                                            </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                End Date
-                                            </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Week Days
-                                            </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Capacity
-                                            </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Fare
-                                            </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Time Slot
+                                                <div className='flex items-center justify-center w-[10vw]'>
+                                                    Time Slot
+                                                </div>
                                             </th>
                                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Function
@@ -70,16 +106,19 @@ function FerryDetailsTable() {
                                         {ferryDetails.map((ferry) => (
                                             <tr key={ferry._id}>
                                                 <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.ferryNumber}</td>
-                                                <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.from}</td>
-                                                <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.to}</td>
-                                                <td className="px-3 py-4 whitespace-nowrap text-black ">{new Date(ferry.startDate).toLocaleDateString()}</td>
-                                                <td className="px-3 py-4 whitespace-nowrap text-black ">{new Date(ferry.endDate).toLocaleDateString()}</td>
+                                                {hideColumns ? null : <>
+                                                    <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.from}</td>
+                                                    <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.to}</td>
+                                                    <td className="px-3 py-4 whitespace-nowrap text-black ">{new Date(ferry.startDate).toLocaleDateString()}</td>
+                                                    <td className="px-3 py-4 whitespace-nowrap text-black ">{new Date(ferry.endDate).toLocaleDateString()}</td>
+                                                </>
+                                                }
                                                 <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.weekDays.join(", ")}</td>
                                                 <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.capacity}</td>
                                                 <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.fare}</td>
-                                                <td className="px-3 py-4 whitespace-nowrap text-black ">{ferry.time_slots.join(", ")}</td>
+                                                <td className="px-3 py-4 whitespace-nowrap text-black"><div className='w-[10vw] overflow-x-scroll scrollbar-thin'>{ferry.time_slots.join(", ")}</div></td>
                                                 <td><button className='px-3 py-4 whitespace-nowrap text-black bg-green-500 hover:bg-green-600 h-[5vh] flex 
-                                        items-center justify-center border-l-green-500' onClick={() => navigate(`/subferry/?ferryId=${ferry._id}`)}>Sub Ferries</button>
+                                        items-center justify-center border-l-green-500' onClick={() => navigate(`/subferry/?ferryId=${ferry._id}`)}>Events</button>
                                                 </td>
                                             </tr>
                                         ))}
