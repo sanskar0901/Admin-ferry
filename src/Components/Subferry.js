@@ -147,7 +147,7 @@ function Subferry() {
                             Bookings
                           </button>
 
-                          {/* <button
+                          <button
                             className="px-3 py-4 whitespace-nowrap text-black bg-rose-700 hover:bg-rose-900 h-[5vh] flex items-center justify-center border-l-rose-600"
                             onClick={e => {
                               e.preventDefault();
@@ -155,7 +155,7 @@ function Subferry() {
                             }}
                           >
                             Delete
-                          </button> */}
+                          </button>
                         </td>
                       </tr>
                     ))}
