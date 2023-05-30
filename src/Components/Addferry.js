@@ -156,10 +156,11 @@ const AddFerry = () => {
                 onChange={handleInputChange}
                 required
               >
-                <option value="">Select destination</option>
-                <option value="Destination 1">Destination 1</option>
-                <option value="Destination 2">Destination 2</option>
-                <option value="Destination 3">Destination 3</option>
+                <option value="">Select starting point</option>
+                <option value="DocksDrivingRange Water Taxi">DocksDrivingRange Water Taxi</option>
+                <option value="Ward's Island">Ward's Island</option>
+                {/* <option value="Destination 2">Destination 2</option>
+                <option value="Destination 3">Destination 3</option> */}
               </select>
             </div>
             <div className="mb-4 flex gap-2">
@@ -174,10 +175,10 @@ const AddFerry = () => {
                 onChange={handleInputChange}
                 required
               >
-                <option value="">Select starting point</option>
-                <option value="Starting point 1">Starting point 1</option>
-                <option value="Starting point 2">Starting point 2</option>
-                <option value="Starting point 3">Starting point 3</option>
+                <option value="">DocksDrivingRange Water Taxi</option>
+                <option value="DocksDrivingRange Water Taxi">DocksDrivingRange Water Taxi</option>
+                {/* <option value="Starting point 2">Starting point 2</option>
+                <option value="Starting point 3">Starting point 3</option> */}
               </select>
             </div>
             <div className="mb-4 flex gap-2">
