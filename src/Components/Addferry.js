@@ -156,7 +156,7 @@ const AddFerry = () => {
                 onChange={handleInputChange}
                 required
               >
-                <option value="">Select starting point</option>
+                <option value="">Select destination</option>
                 <option value="DocksDrivingRange Water Taxi">DocksDrivingRange Water Taxi</option>
                 <option value="Ward's Island">Ward's Island</option>
                 {/* <option value="Destination 2">Destination 2</option>
@@ -175,8 +175,9 @@ const AddFerry = () => {
                 onChange={handleInputChange}
                 required
               >
-                <option value="">DocksDrivingRange Water Taxi</option>
+                <option value="">Select starting point</option>
                 <option value="DocksDrivingRange Water Taxi">DocksDrivingRange Water Taxi</option>
+                <option value="Ward's Island">Ward's Island</option>
                 {/* <option value="Starting point 2">Starting point 2</option>
                 <option value="Starting point 3">Starting point 3</option> */}
               </select>
