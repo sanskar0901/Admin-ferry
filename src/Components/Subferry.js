@@ -128,7 +128,7 @@ function Subferry() {
                               {column.prop === 'startDate' || column.prop === 'endDate' ?
                                 new Date(ferry[column.prop]).toLocaleDateString() :
                                 column.prop === 'capacity' ?
-                                  <p>
+                                  <p className={`${ferry[column.prop] < 10 ? "text-red-500" : ferry[column.prop] < 20 ? " text-yellow-500" : "text-green-500"}`}>
                                     {`${totalcapacity - ferry[column.prop]}/${totalcapacity}`}
                                   </p> :
                                   ferry[column.prop]
