@@ -3,6 +3,7 @@ import axios from 'axios';
 import { API_URI } from '../constants/apiUrl.constant';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
 
 function Subferry() {
   const navigate = useNavigate();
@@ -29,13 +30,15 @@ function Subferry() {
     setHideColumns(!hideColumns);
   };
 
+  const options = [
+    { value: '', label: 'All' },
+    ...filtertimearr.map((time) => ({ value: time, label: time }))
+  ];
 
 
-
-  // Do something with the query params (e.g. display a success message)
-  // ...
-
-  // Truncate the query params from the URL
+  const handleChange = (selectedOption) => {
+    setTimeSlotFilter(selectedOption.value);
+  };
 
   useEffect(() => {
 
@@ -64,6 +67,8 @@ function Subferry() {
     )
   }
 
+
+
   return (
     <div className="flex flex-col">
       <div className="flex justify-start">
@@ -91,22 +96,14 @@ function Subferry() {
                     <label htmlFor="timeSlotFilter" className="font-medium text-gray-700">
                       Time Slot:
                     </label>
-                    <select
+                    <Select
                       id="timeSlotFilter"
                       name="timeSlotFilter"
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
-                      value={timeSlotFilter}
-                      onChange={(e) => setTimeSlotFilter(e.target.value)}
-                    >
-                      <option value="">All</option>
-                      {
-                        filtertimearr.map((time) => (
-                          <option value={time}>{time}</option>
-                        ))
-                      }
-
-
-                    </select>
+                      options={options}
+                      value={options.find((option) => option.value === timeSlotFilter)}
+                      onChange={handleChange}
+                    />
 
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
