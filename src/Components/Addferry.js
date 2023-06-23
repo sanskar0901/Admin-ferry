@@ -145,25 +145,6 @@ const AddFerry = () => {
               />
             </div>
             <div className="mb-4 flex gap-2">
-              <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="to">
-                To
-              </label>
-              <select
-                className="w-full px-3 py-2 leading-tight text-black border rounded shadow appearance-none focus:outline-none focus:shadow-outline bg-white"
-                id="to"
-                name="to"
-                value={ferry.to}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Select destination</option>
-                <option value="DocksDrivingRange Water Taxi">DocksDrivingRange Water Taxi</option>
-                <option value="Ward's Island">Ward's Island</option>
-                {/* <option value="Destination 2">Destination 2</option>
-                <option value="Destination 3">Destination 3</option> */}
-              </select>
-            </div>
-            <div className="mb-4 flex gap-2">
               <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="from">
                 From
               </label>
@@ -182,6 +163,26 @@ const AddFerry = () => {
                 <option value="Starting point 3">Starting point 3</option> */}
               </select>
             </div>
+            <div className="mb-4 flex gap-2">
+              <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="to">
+                To
+              </label>
+              <select
+                className="w-full px-3 py-2 leading-tight text-black border rounded shadow appearance-none focus:outline-none focus:shadow-outline bg-white"
+                id="to"
+                name="to"
+                value={ferry.to}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select destination</option>
+                <option value="DocksDrivingRange Water Taxi">DocksDrivingRange Water Taxi</option>
+                <option value="Ward's Island">Ward's Island</option>
+                {/* <option value="Destination 2">Destination 2</option>
+                <option value="Destination 3">Destination 3</option> */}
+              </select>
+            </div>
+
             <div className="mb-4 flex gap-2">
               <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="startDate">
                 Start Date
