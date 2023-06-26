@@ -6,6 +6,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0px 5%;
+    position: fixed;
 }
 .logo{
     height:55%;
