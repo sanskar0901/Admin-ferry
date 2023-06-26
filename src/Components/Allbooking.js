@@ -27,7 +27,7 @@ function Allbooking() {
 
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col pt-20">
             <div className="overflow-x-auto">
                 <div className="py-2 align-middle inline-block min-w-full">
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">

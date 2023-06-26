@@ -22,7 +22,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
     }
 
     return (
-        <div className="w-full mt-10 flex justify-center items-center">
+        <div className="w-full mt-10 flex justify-center items-center pt-20">
             <form className="flex flex-col justify-center items-center gap-3 p-5 bg-blue-300 rounded-md" onSubmit={(e) => handleLogin(e)}>
                 <h2 className="text-2xl font-semibold">Login</h2>
                 <div className="flex flex-col justify-center items-center">

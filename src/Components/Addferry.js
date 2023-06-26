@@ -122,7 +122,7 @@ const AddFerry = () => {
 
   return (
     <div>
-      <form className='flex flex-col gap-4 justify-center items-center'>
+      <form className='flex flex-col gap-4 justify-center items-center pt-20'>
         <p className='text-red-500 text-xs italic font-bold'>*All Fields are Required</p>
         <div className='flex md:flex-row flex-col justify-center'>
 
