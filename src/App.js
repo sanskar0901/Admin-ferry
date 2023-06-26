@@ -7,45 +7,46 @@ import FerryDetailsTable from './Components/FerryDetailsTable';
 import Subferry from './Components/Subferry';
 import Booking from './Components/booking';
 import Allbooking from './Components/Allbooking';
+import Cookies from 'js-cookie';
 
-import { isMobile } from 'react-device-detect';
-import QrCodeReader from './Components/QrCodeReader';
+
 import Login from './Components/login';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  useEffect(() => {
+    Cookies.get('email') === "TheOtterGuy" && Cookies.get('password') === "WardToronto23" && setIsLoggedIn(true)
+  })
+
 
   return (
     <div className="App">
-      {isMobile ? <>
-        <Routes>
-          <Route path="/" element={<QrCodeReader />} /></Routes></> :
-        <>
-          <Header />
-          <br></br>
-          <Routes>
-            {
-              !isLoggedIn &&
-                <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-            }
-            {
-              isLoggedIn &&
-              <>
-                <Route path="/addferry" element={<AddFerry />} />
-                <Route path="/" element={<FerryDetailsTable />} />
-                <Route path='/subferry' element={<Subferry />} />
-                <Route path='/bookings' element={<Booking />} />
-                <Route path='/allbookings' element={<Allbooking />} />
-              </>
-            }
-            {/* <Route path='/qrcode' element={<Qrcode />} /> */}
 
-          </Routes>
-          {/* </Router> */}
-        </>
-      }
+      <Header />
+      <br></br>
+      <Routes>
+        {
+          !isLoggedIn &&
+          <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+        }
+        {
+          isLoggedIn &&
+          <>
+            <Route path="/addferry" element={<AddFerry />} />
+            <Route path="/" element={<FerryDetailsTable />} />
+            <Route path='/subferry' element={<Subferry />} />
+            <Route path='/bookings' element={<Booking />} />
+            <Route path='/allbookings' element={<Allbooking />} />
+          </>
+        }
+        {/* <Route path='/qrcode' element={<Qrcode />} /> */}
+
+      </Routes>
+      {/* </Router> */}
+
+
     </div>
   );
 }

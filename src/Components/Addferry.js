@@ -124,14 +124,14 @@ const AddFerry = () => {
     <div>
       <form className='flex flex-col gap-4 justify-center items-center'>
         <p className='text-red-500 text-xs italic font-bold'>*All Fields are Required</p>
-        <div className='flex justify-center'>
+        <div className='flex md:flex-row flex-col justify-center'>
 
 
-          <div className='w-[40vw]'>
+          <div className='md:w-[40vw] w-[80vw]'>
 
 
             <div className="mb-4 flex gap-2" >
-              <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="ferryNumber">
+              <label className="block mb-2 md:w-[10vw] w-[40vw] font-bold text-black" htmlFor="ferryNumber">
                 Ferry Number
               </label>
               <input
@@ -145,7 +145,7 @@ const AddFerry = () => {
               />
             </div>
             <div className="mb-4 flex gap-2">
-              <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="from">
+              <label className="block mb-2 md:w-[10vw] w-[40vw] font-bold text-black" htmlFor="from">
                 From
               </label>
               <select
@@ -164,7 +164,7 @@ const AddFerry = () => {
               </select>
             </div>
             <div className="mb-4 flex gap-2">
-              <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="to">
+              <label className="block mb-2 md:w-[10vw] w-[40vw] font-bold text-black" htmlFor="to">
                 To
               </label>
               <select
@@ -184,7 +184,7 @@ const AddFerry = () => {
             </div>
 
             <div className="mb-4 flex gap-2">
-              <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="startDate">
+              <label className="block mb-2 md:w-[10vw] w-[40vw] font-bold text-black" htmlFor="startDate">
                 Start Date
                 <p className='text-red-500 text-xs italic'>*Not Included</p>
               </label>
@@ -197,7 +197,7 @@ const AddFerry = () => {
               />
             </div>
             <div className="mb-4 flex gap-2">
-              <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="endDate">
+              <label className="block mb-2 md:w-[10vw] w-[40vw] font-bold text-black" htmlFor="endDate">
                 End Date
               </label>
               <DatePicker
@@ -209,10 +209,10 @@ const AddFerry = () => {
               />
             </div>
             <div className="mb-4 flex gap-2">
-              <label className="block mb-2 w-[10vw] font-bold text-gray-700" htmlFor="weekDays">
+              <label className="block mb-2 md:w-[10vw] w-[40vw] font-bold text-gray-700" htmlFor="weekDays">
                 Week Days
               </label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                 <label className="inline-flex items-center">
                   <input
                     type="checkbox"
@@ -297,7 +297,7 @@ const AddFerry = () => {
 
 
             <div className="mb-4 flex gap-2">
-              <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="capacity">
+              <label className="block mb-2 md:w-[10vw] w-[40vw] font-bold text-black" htmlFor="capacity">
                 Capacity
               </label>
               <input
@@ -311,7 +311,7 @@ const AddFerry = () => {
               />
             </div>
             <div className="mb-4 flex gap-2">
-              <label className="block mb-2 w-[10vw] font-bold text-black" htmlFor="fare">
+              <label className="block mb-2 md:w-[10vw] w-[40vw] font-bold text-black" htmlFor="fare">
                 Fare
               </label>
               <input
@@ -325,11 +325,11 @@ const AddFerry = () => {
               />
             </div>
             <div className="mb-4 flex gap-2">
-              <label htmlFor="time_slot" className="block mb-2 w-[10vw] font-bold text-black">
+              <label htmlFor="time_slot" className="block mb-2 md:w-[10vw] w-[40vw] font-bold text-black">
                 Time Slot
                 <p className='text-red-500 text-xs italic font-bold'>*Enter a time in the 24-hour format (e.g. 00:00)</p>
               </label>
-              <div className="mt-1 grid grid-cols-5 gap-5 overflow-y-scroll overflow-x-hidden  w-[40vw] text-black">
+              <div className="mt-1 grid grid-cols-2 md:grid-cols-5 gap-5 overflow-y-scroll overflow-x-hidden  w-[41vw] text-black">
                 <input type="text" placeholder="00:00" onChange={handleTimeSlotChange}
                   className="w-full px-3 py-2 leading-tight text-black border rounded shadow appearance-none focus:outline-none focus:shadow-outline bg-white"
                 />
