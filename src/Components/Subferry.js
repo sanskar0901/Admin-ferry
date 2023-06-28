@@ -139,7 +139,7 @@ function Subferry() {
                         <td className='flex justify-start py-2 gap-4 items-center'>
                           <button
                             className="px-3 py-4 whitespace-nowrap text-black bg-green-500 hover:bg-green-600 h-[5vh] flex items-center  border-l-green-500"
-                            onClick={() => navigate(`/ bookings /? ferryId = ${ferry._id}`)}
+                            onClick={() => navigate(`/bookings/?ferryId=${ferry._id}`)}
                           >
                             Bookings
                           </button>
